@@ -9,7 +9,7 @@ struct PasswordChallenge {
 }
 
 #[aoc_generator(day2)]
-fn parse_input_day1(input: &str) -> Vec<PasswordChallenge> {
+fn parse_input_day2(input: &str) -> Vec<PasswordChallenge> {
     input.lines().map(|v| parse_line(v)).collect()
 }
 
