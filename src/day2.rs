@@ -1,5 +1,11 @@
 use aoc_runner_derive::{aoc, aoc_generator};
-use regex::Regex;
+
+macro_rules! regex {
+    ($re:literal $(,)?) => {{
+        static RE: once_cell::sync::OnceCell<regex::Regex> = once_cell::sync::OnceCell::new();
+        RE.get_or_init(|| regex::Regex::new($re).unwrap())
+    }};
+}
 
 struct PasswordChallenge {
     password: String,
@@ -14,7 +20,7 @@ fn parse_input_day2(input: &str) -> Vec<PasswordChallenge> {
 }
 
 fn parse_line(line: &str) -> PasswordChallenge {
-    let pattern = Regex::new(r"^(\d+)-(\d+)\s(\w):\s(\w+)$").expect("couldn't create Regex");
+    let pattern = regex!(r"^(\d+)-(\d+)\s(\w):\s(\w+)$");
     let captures = pattern.captures(line).unwrap();
 
     PasswordChallenge {
@@ -52,11 +58,14 @@ fn valid_password_positions(input: &Vec<PasswordChallenge>) -> usize {
 }
 
 fn is_valid_password_by_pos(challenge: &PasswordChallenge) -> bool {
-    challenge.password.char_indices().fold(false, |memo, (idx, ch)| {
-        if idx == challenge.min-1 || idx == challenge.max-1 {
-            memo ^ (ch == challenge.search_char)
-        } else {
-            memo
-        }
-    })
+    challenge
+        .password
+        .char_indices()
+        .fold(false, |memo, (idx, ch)| {
+            if idx == challenge.min - 1 || idx == challenge.max - 1 {
+                memo ^ (ch == challenge.search_char)
+            } else {
+                memo
+            }
+        })
 }
