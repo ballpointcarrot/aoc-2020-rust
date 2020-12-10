@@ -37,9 +37,7 @@ fn find_target_value(input: &Vec<isize>) -> isize {
     *process_xmas(input, preamble_count)
 }
 
-#[aoc(day9, part2)]
-fn hit_weak_point_for_massive_damage(input: &Vec<isize>) -> isize {
-    let preamble_count = 25;
+fn process_weak_point(input: &Vec<isize>, preamble_count: usize) -> isize {
     let target_value = *process_xmas(input, preamble_count);
     let mut span: &[isize];
     for (idx, _) in input.iter().enumerate() {
@@ -61,6 +59,12 @@ fn hit_weak_point_for_massive_damage(input: &Vec<isize>) -> isize {
         }
     }
     -1
+}
+
+#[aoc(day9, part2)]
+fn hit_weak_point_for_massive_damage(input: &Vec<isize>) -> isize {
+    let preamble_count = 25;
+    process_weak_point(input, preamble_count)
 }
 
 #[cfg(test)]
@@ -115,6 +119,6 @@ fn test_input_part_2() {
 
     assert_eq!(
         62,
-        hit_weak_point_for_massive_damage(&parse_input_day9(test_str))
+        process_weak_point(&parse_input_day9(test_str), 5)
     );
 }
