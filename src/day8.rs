@@ -19,7 +19,7 @@ impl Program {
     }
     fn run_until_cycle(&mut self) {
         loop {
-            let mut inst = self.instructions.get_mut(self.fp as usize);
+            let inst = self.instructions.get_mut(self.fp as usize);
             match inst {
                 Some(inst) => {
                     inst.visit_count += 1;

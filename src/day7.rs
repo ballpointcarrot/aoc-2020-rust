@@ -59,7 +59,7 @@ fn contains_bag(input: &DiGraph<String, usize>) -> usize {
         .unwrap();
     let mut count = 0;
     let mut dfs = Dfs::new(&flip, shiny_gold_index);
-    while let Some(node) = dfs.next(&flip) {
+    while let Some(_) = dfs.next(&flip) {
         count += 1;
     }
     count - 1
